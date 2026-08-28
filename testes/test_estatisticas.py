@@ -163,3 +163,182 @@ def test_coeficiente_variacao():
     resultado = coeficiente_variacao(lista)
 
     assert resultado == pytest.approx(52.7046276695)
+# ============================================================
+# VALIDAÇÃO COM BIBLIOTECAS DE REFERÊNCIA
+# ============================================================
+
+import numpy as np
+from scipy import stats
+
+TOLERANCIA = 1e-6
+
+
+def test_media_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    assert media(dados) == pytest.approx(
+        np.mean(dados),
+        abs=TOLERANCIA
+    )
+
+
+def test_mediana_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    assert mediana(dados) == pytest.approx(
+        np.median(dados),
+        abs=TOLERANCIA
+    )
+
+
+def test_moda_vs_scipy():
+    dados = [1, 2, 2, 3, 4, 5]
+
+    resultado_scipy = stats.mode(
+        dados,
+        keepdims=False
+    ).mode
+
+    assert moda(dados) == pytest.approx(
+        resultado_scipy,
+        abs=TOLERANCIA
+    )
+
+
+def test_minimo_vs_numpy():
+    dados = [5, 2, 8, 1, 4]
+
+    assert minimo(dados) == pytest.approx(
+        np.min(dados),
+        abs=TOLERANCIA
+    )
+
+
+def test_maximo_vs_numpy():
+    dados = [5, 2, 8, 1, 4]
+
+    assert maximo(dados) == pytest.approx(
+        np.max(dados),
+        abs=TOLERANCIA
+    )
+
+
+def test_amplitude_vs_numpy():
+    dados = [5, 2, 8, 1, 4]
+
+    assert amplitude(dados) == pytest.approx(
+        np.ptp(dados),
+        abs=TOLERANCIA
+    )
+
+
+def test_variancia_amostral_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    assert variancia(dados) == pytest.approx(
+        np.var(dados, ddof=1),
+        abs=TOLERANCIA
+    )
+
+
+def test_desvio_padrao_amostral_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    assert desvio_padrao(dados) == pytest.approx(
+        np.std(dados, ddof=1),
+        abs=TOLERANCIA
+    )
+
+
+def test_variancia_populacional_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    assert variancia_populacional(dados) == pytest.approx(
+        np.var(dados, ddof=0),
+        abs=TOLERANCIA
+    )
+
+
+def test_desvio_padrao_populacional_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    assert desvio_padrao_populacional(dados) == pytest.approx(
+        np.std(dados, ddof=0),
+        abs=TOLERANCIA
+    )
+
+
+def test_quartis_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 6, 7]
+
+    assert primeiro_quartil(dados) == pytest.approx(
+        np.percentile(dados, 25),
+        abs=TOLERANCIA
+    )
+
+    assert segundo_quartil(dados) == pytest.approx(
+        np.percentile(dados, 50),
+        abs=TOLERANCIA
+    )
+
+    assert terceiro_quartil(dados) == pytest.approx(
+        np.percentile(dados, 75),
+        abs=TOLERANCIA
+    )
+
+
+def test_iqr_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 6, 7]
+
+    q1 = np.percentile(dados, 25)
+    q3 = np.percentile(dados, 75)
+
+    assert intervalo_interquartil(dados) == pytest.approx(
+        q3 - q1,
+        abs=TOLERANCIA
+    )
+
+
+def test_covariancia_vs_numpy():
+    x = [1, 2, 3, 4, 5]
+    y = [2, 4, 5, 8, 10]
+
+    resultado_numpy = np.cov(
+        x,
+        y,
+        ddof=1
+    )[0, 1]
+
+    assert covariancia(x, y) == pytest.approx(
+        resultado_numpy,
+        abs=TOLERANCIA
+    )
+
+
+def test_correlacao_pearson_vs_numpy():
+    x = [1, 2, 3, 4, 5]
+    y = [2, 4, 5, 8, 10]
+
+    resultado_numpy = np.corrcoef(
+        x,
+        y
+    )[0, 1]
+
+    assert correlacao_pearson(x, y) == pytest.approx(
+        resultado_numpy,
+        abs=TOLERANCIA
+    )
+
+
+def test_coeficiente_variacao_vs_numpy():
+    dados = [1, 2, 3, 4, 5, 10]
+
+    resultado_numpy = (
+        np.std(dados, ddof=1)
+        / np.mean(dados)
+    ) * 100
+
+    assert coeficiente_variacao(dados) == pytest.approx(
+        resultado_numpy,
+        abs=TOLERANCIA
+    )
