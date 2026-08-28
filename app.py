@@ -566,7 +566,59 @@ else:
         "calculada porque a média não é positiva."
     )
 
+# ============================================================
+# INTERPRETAÇÃO DO AJUSTE DAS DISTRIBUIÇÕES
+# ============================================================
 
+st.write("### 🔎 Análise Visual do Ajuste")
+
+if desvio_dados > 0:
+
+    diferenca_media_mediana = abs(
+        media_dados - mediana_calculada
+    )
+
+    proporcao_assimetria = (
+        diferenca_media_mediana
+        / desvio_dados
+    )
+
+    if proporcao_assimetria < 0.10:
+
+        st.info(
+            "A média e a mediana estão relativamente próximas. "
+            "Isso sugere menor assimetria e pode indicar que a "
+            "Distribuição Normal apresenta um ajuste visual mais "
+            "compatível com os dados. A conclusão deve ser feita "
+            "observando também a proximidade entre o histograma "
+            "e a curva Normal."
+        )
+
+    else:
+
+        st.info(
+            "Existe diferença relevante entre média e mediana, "
+            "indicando assimetria nos dados. Nesse caso, a "
+            "Distribuição Normal pode apresentar limitações de ajuste."
+        )
+
+
+if media_dados > mediana_calculada and min(lista) >= 0:
+
+    st.info(
+        "Os dados são não negativos e apresentam assimetria à direita. "
+        "Essas características são compatíveis com o formato esperado "
+        "de uma Distribuição Exponencial. O ajuste deve ser avaliado "
+        "visualmente pela proximidade entre o histograma e a curva."
+    )
+
+else:
+
+    st.info(
+        "A Distribuição Exponencial pode não representar adequadamente "
+        "esta variável, pois seu formato teórico é mais apropriado para "
+        "dados não negativos e assimétricos à direita."
+    )
 st.divider()
 
 
@@ -928,6 +980,31 @@ else:
         )
 
         # ====================================================
+        # INTERPRETAÇÃO DOS COEFICIENTES
+        # ====================================================
+
+        if a > 0:
+            direcao = "aumentar"
+        elif a < 0:
+            direcao = "diminuir"
+        else:
+            direcao = "permanecer praticamente constante"
+
+        st.info(
+            f"📌 **Interpretação da regressão:** "
+            f"para cada aumento de 1 unidade em **{coluna_x}**, "
+            f"o valor previsto de **{coluna_y}** tende a "
+            f"{direcao} aproximadamente **{abs(a):.6f} unidade(s)**. "
+            f"O intercepto **b = {b:.6f}** representa o valor previsto "
+            f"de {coluna_y} quando {coluna_x} = 0. "
+            f"O **R² = {r2:.4f}** indica que aproximadamente "
+            f"**{r2 * 100:.2f}%** da variabilidade de {coluna_y} "
+            f"é explicada pelo modelo linear com {coluna_x}. "
+            f"O intercepto deve ser interpretado com cautela quando "
+            f"X = 0 estiver fora da faixa observada dos dados."
+        )
+
+        # ====================================================
         # GRÁFICO DA REGRESSÃO
         # ====================================================
 
@@ -1133,13 +1210,13 @@ if coluna_x != coluna_y:
         )
 
         if (
-            diferenca_a < 0.0001
+            diferenca_a < 1e-6
             and
-            diferenca_b < 0.0001
+            diferenca_b < 1e-6
             and
-            diferenca_correlacao < 0.0001
+            diferenca_correlacao < 1e-6
             and
-            diferenca_r2 < 0.0001
+            diferenca_r2 < 1e-6
         ):
 
             st.success(
@@ -1211,7 +1288,7 @@ if (
         media_calculada
         -
         media_numpy
-    ) < 0.0001
+    ) < 1e-6
 
     and
 
@@ -1219,7 +1296,7 @@ if (
         mediana_calculada
         -
         mediana_numpy
-    ) < 0.0001
+    ) < 1e-6
 
     and
 
@@ -1227,7 +1304,7 @@ if (
         variancia_calculada
         -
         variancia_numpy
-    ) < 0.0001
+    ) < 1e-6
 
     and
 
@@ -1235,7 +1312,7 @@ if (
         desvio_calculado
         -
         desvio_numpy
-    ) < 0.0001
+    ) < 1e-6
 ):
 
     st.success(
