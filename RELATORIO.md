@@ -435,11 +435,14 @@ mediana, variância, desvio padrão, correlação e regressão.
 
 Também foram desenvolvidos testes automatizados utilizando Pytest.
 
-A tolerância numérica adotada nas comparações deve ser documentada
-junto aos testes automatizados.
+Foi adotada uma tolerância numérica de 1e-6 nas comparações entre as
+funções implementadas manualmente e os resultados das bibliotecas de
+referência.
 
-Na versão final, os testes devem ser executados com:
+Foram executados 33 testes automatizados com Pytest, incluindo validações
+com NumPy e SciPy. Todos os 33 testes foram aprovados com sucesso.
 
+Os testes podem ser executados com:
 ```bash
 python -m pytest -v
 ```

@@ -246,7 +246,16 @@ Para executar:
 python -m pytest -v
 ```
 
-Na versão atual do projeto, os testes existentes são executados com sucesso.
+Atualmente, o projeto possui 33 testes automatizados executados com Pytest.
+
+Os testes incluem validações das funções implementadas manualmente com
+bibliotecas de referência, utilizando principalmente NumPy e SciPy.
+
+Foi adotada uma tolerância numérica de 1e-6 nas comparações.
+
+Resultado atual:
+
+33 testes aprovados com sucesso.
 
 ---
 
