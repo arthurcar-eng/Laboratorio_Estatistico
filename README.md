@@ -284,7 +284,7 @@ Laboratorio_Estatistico/
 ### 1. Clonar o repositório
 
 ```bash
-git clone LINK_DO_SEU_REPOSITORIO
+git clone https://github.com/arthurcar-eng/Laboratorio_Estatistico.git
 ```
 
 Entre na pasta:
