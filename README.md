@@ -381,3 +381,9 @@ O Laboratório Estatístico demonstra a aplicação prática dos conceitos estud
 O projeto combina implementação matemática própria, exploração de dados reais, visualizações, simulações de probabilidade, distribuições teóricas, correlação e regressão linear.
 
 Os cálculos implementados manualmente podem ser comparados com bibliotecas consolidadas, permitindo verificar a precisão das funções desenvolvidas e relacionar as fórmulas matemáticas com sua implementação computacional.
+
+## 🌐 Aplicação Online
+
+O Laboratório Estatístico está publicado e pode ser utilizado diretamente pelo navegador:
+
+https://laboratorio-estatistico-arthur.streamlit.app/
